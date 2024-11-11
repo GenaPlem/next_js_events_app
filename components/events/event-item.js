@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Button from "../ui/button";
 
 import styles from "./event-item.module.css";
 
@@ -29,7 +29,7 @@ export default function EventItem(props) {
           </div>
         </div>
         <div className={styles.actions}>
-          <Link href={exploreLink}>Explore Event</Link>
+          <Button link={exploreLink}>Explore Event</Button>
         </div>
       </div>
     </li>
