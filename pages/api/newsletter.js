@@ -1,18 +1,4 @@
-import { MongoClient } from "mongodb";
-
-async function connectDatabase() {
-  const client = await MongoClient.connect(
-    `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.wgb0k.mongodb.net/events?retryWrites=true&w=majority&appName=Cluster0`
-  );
-
-  return client;
-}
-
-async function insertDocument(client, document) {
-  const db = client.db();
-
-  await db.collection("newsletter").insertOne(document);
-}
+import { connectDatabase, insertDocument } from "../../helpers/db-util";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -33,7 +19,7 @@ export default async function handler(req, res) {
     }
 
     try {
-      await insertDocument(client, { email: userEmail });
+      await insertDocument(client, "newsletter", { email: userEmail });
       client.close();
     } catch (error) {
       res.status(500).json({ message: "Inserting data failed!" });
